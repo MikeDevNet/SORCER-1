@@ -10,4 +10,10 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.stateofflow.eclipse.metrics.MetricsNature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>IGRID_HOME</name>
+			<value>file:/C:/Users/Mike/git/SORCER-1/iGrid</value>
+		</variable>
+	</variableList>
 </projectDescription>
