@@ -35,7 +35,7 @@ public void makeExchange(Money exchangeFrom, Money exchangeTo)
 
 private void checkForNegativeAmount(Money amount)
 		throws NegativeAmountException {
-	float cash = amount.getAmount();
+	double cash = amount.getAmount();
 
 	if (0 > cash) {
 		throw new NegativeAmountException();

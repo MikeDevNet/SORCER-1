@@ -28,7 +28,7 @@
 
 	<!-- The sources to compile -->
 	<patternset id="ant.java">
-		<include name="rmi/exchange_office/*.java" />
+		<include name="rmi/exchange_office/**/*.java" />
 		<exclude name="**/SAVE/*.java" />
 		<exclude name="**/BAK/*.java" />
 	</patternset>
@@ -120,8 +120,8 @@
 		<classdepandjar jarfile="${sorcer-dl.lib}/ExchangeOffice-ui.jar" files="true">
 			<classpath refid="project.classpath" />
 			<in name="rmi.exchange_office" />
-			<in name="sorcer.ui" />
-			<topclass name="rmi.exchange_office.ui.AccountUI" />
+			<in name="rmi.exchange_office.ui" />
+			<topclass name="rmi.exchange_office.ui.ExchangeOfficeUI" />
 			<topclass name="sorcer.ui.serviceui.UIComponentFactory" />
 		</classdepandjar>
 	</target>
@@ -131,7 +131,7 @@
 			<classpath refid="project.classpath" />
 			<in name="sorcer.account" />
 			<in name="sorcer.ui" />
-			<topclass name="rmi.exchange_office.ui.mvc.AccountView" />
+			<topclass name="rmi.exchange_office.ui.mvc.ExchangeOfficeView" />
 			<topclass name="sorcer.ui.serviceui.UIComponentFactory" />
 		</classdepandjar>
 	</target>

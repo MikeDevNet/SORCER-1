@@ -67,20 +67,20 @@ public class ServiceExchangeOfficeImpl implements ExchangeOffice,
 	}
 
 	public Context getExchangeRate(Context from, Context to)
-			throws RemoteException {
+			throws RemoteException, ExchangeOfficeException  {
 		return process(from, to, ServiceExchangeOffice.RATE);
 	}
 	
-	public Context getCurrencyFrom(Context context) throws RemoteException{
+	public Context getCurrencyFrom(Context context) throws RemoteException, ExchangeOfficeException{
 		return process(context , ServiceExchangeOffice.CURRENCY_FROM);
 	}
 	
-	public Context getCurrencyTo(Context context)  throws RemoteException {
+	public Context getCurrencyTo(Context context)  throws RemoteException, ExchangeOfficeException {
 		return process(context , ServiceExchangeOffice.CURRENCY_TO);
 	}
 
 	public Context makeExchange(Context exchangeFrom, Context exchangeTo)
-			throws RemoteException {
+			throws RemoteException, ExchangeOfficeException {
 		return process(exchangeFrom, exchangeTo, ServiceExchangeOffice.EXCHANGE);
 	}
 	
@@ -102,7 +102,7 @@ public class ServiceExchangeOfficeImpl implements ExchangeOffice,
 			logger.info(selector + " result: \n" + result);
 			String outputMessage = "processed by " + getHostname();
 			context.putValue(selector + CPS +
-					ServiceExchangeOffice.BALANCE + CPS + ServiceExchangeOffice.AMOUNT, result);
+					ServiceExchangeOffice.EXCHANGE + CPS + ServiceExchangeOffice.AMOUNT, result);
 			context.putValue(ServiceExchangeOffice.COMMENT, outputMessage);
 
 		} catch (Exception ex) {
@@ -118,7 +118,7 @@ public class ServiceExchangeOfficeImpl implements ExchangeOffice,
 
 			Money result = null, amount = null;
 			if (selector.equals(ServiceExchangeOffice.EXCHANGE)) {
-				amount = (Money) contextTo.getValue(ServiceExchangeOffice.DEPOSIT + CPS
+				amount = (Money) contextTo.getValue(ServiceExchangeOffice.EXCHANGE + CPS
 						+ ServiceExchangeOffice.AMOUNT);
 				makeExchange(amount, amount);
 				result = getCurrencyTo();
@@ -130,7 +130,7 @@ public class ServiceExchangeOfficeImpl implements ExchangeOffice,
 			logger.info(selector + " result: \n" + result);
 			String outputMessage = "processed by " + getHostname();
 			contextFrom.putValue(selector + CPS +
-					ServiceExchangeOffice.BALANCE + CPS + ServiceExchangeOffice.AMOUNT, result);
+					ServiceExchangeOfficeImpl.EXCHANGE + CPS + ServiceExchangeOffice.AMOUNT, result);
 			contextTo.putValue(ServiceExchangeOffice.COMMENT, outputMessage);
 
 		} catch (Exception ex) {
@@ -164,7 +164,7 @@ public class ServiceExchangeOfficeImpl implements ExchangeOffice,
 
 	private void checkForNegativeAmount(Money amount)
 			throws NegativeAmountException {
-		float cash = amount.getAmount();
+		double cash = amount.getAmount();
 
 		if (0 > cash) {
 			throw new NegativeAmountException();
